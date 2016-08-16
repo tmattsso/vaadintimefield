@@ -4,7 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>timefield</artifactId>
 	<packaging>jar</packaging>
-	<name>MyComponent Add-on</name>
+	<name>TimeField</name>
+	<version>2.0</version>
 
 
 	<parent>
@@ -18,7 +19,7 @@
 		<Implementation-Version>${project.version}</Implementation-Version>
 		<!-- Must not change this because of the Directory -->
 		<Implementation-Title>${project.name}</Implementation-Title>
-		<Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+		<Implementation-Vendor>Thomas Mattsson</Implementation-Vendor>
 		<Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
 		<Vaadin-Addon>${project.artifactId}-${project.version}.jar</Vaadin-Addon>
 	</properties>
