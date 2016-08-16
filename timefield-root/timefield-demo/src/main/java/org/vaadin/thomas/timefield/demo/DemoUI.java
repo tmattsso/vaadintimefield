@@ -21,19 +21,19 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("demo")
 @Title("MyComponent Add-on Demo")
 @SuppressWarnings("serial")
-public class DemoUI extends UI
-{
+public class DemoUI extends UI {
 
-    @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = DemoUI.class, widgetset = "org.vaadin.thomas.timefield.demo.DemoWidgetSet")
-    public static class Servlet extends VaadinServlet {
-    }
+	@WebServlet(value = "/*", asyncSupported = true)
+	@VaadinServletConfiguration(productionMode = false, ui = DemoUI.class)
+	public static class Servlet extends VaadinServlet {
+	}
 
-    @Override
-    protected void init(VaadinRequest request) {
+	@Override
+	protected void init(VaadinRequest request) {
 
-    	VerticalLayout content = new VerticalLayout();
+		final VerticalLayout content = new VerticalLayout();
 		content.setSpacing(true);
+		content.setMargin(true);
 		setContent(content);
 
 		final TimeField f = new TimeField();
@@ -79,6 +79,6 @@ public class DemoUI extends UI
 		f2.setReadOnly(true);
 		content.addComponent(f2);
 
-    }
+	}
 
 }

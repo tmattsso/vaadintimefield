@@ -8,6 +8,16 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>MyComponent Add-on Root Project</name>
 
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<vaadin.version>7.6.8</vaadin.version>
+		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
+	</properties>
+
 	<modules>
 		<module>timefield-addon</module>
 		<module>timefield-demo</module>
