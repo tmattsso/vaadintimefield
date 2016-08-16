@@ -1,16 +1,17 @@
 package org.vaadin.thomas.timefield.demo;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.vaadin.thomas.timefield.TimeField;
+import org.vaadin.thomas.timefield.AbstractTimeField;
+import org.vaadin.thomas.timefield.LocalTimeField;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -36,31 +37,29 @@ public class DemoUI extends UI {
 		content.setMargin(true);
 		setContent(content);
 
-		final TimeField f = new TimeField();
+		final AbstractTimeField<?> f = new LocalTimeField();
 		f.setLocale(Locale.FRANCE);
 		f.setWidth("200px");
 		f.setImmediate(true);
 		f.setHours(0);
 		content.addComponent(f);
 
-		TimeField f2 = new TimeField();
+		AbstractTimeField<?> f2 = new LocalTimeField();
 		f2.setResolution(Resolution.SECOND);
 		f2.setLocale(Locale.US);
 		f2.setWidth("200px");
 		// f2.setHourMin(1);
 		f2.setHourMax(14);
 		content.addComponent(f2);
-		f2.addValueChangeListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				Notification.show(event.getProperty().getValue() + "");
-			}
+		f2.addValueChangeListener(e -> {
+			final LocalTime t = (LocalTime) e.getProperty().getValue();
+			System.out.println(t);
+			Notification.show(t.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		});
 
 		f2.setPropertyDataSource(f);
 
-		f2 = new TimeField();
+		f2 = new LocalTimeField();
 		f2.setWidth("200px");
 		f2.setResolution(Resolution.MINUTE);
 		f2.setMinutes(40);
@@ -69,12 +68,12 @@ public class DemoUI extends UI {
 		f2.setHourMax(3);
 		content.addComponent(f2);
 
-		f2 = new TimeField("disabled");
+		f2 = new LocalTimeField("disabled");
 		f2.setWidth("200px");
 		f2.setEnabled(false);
 		content.addComponent(f2);
 
-		f2 = new TimeField("readonly");
+		f2 = new LocalTimeField("readonly");
 		f2.setWidth("200px");
 		f2.setReadOnly(true);
 		content.addComponent(f2);

@@ -31,7 +31,7 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	private int minHours = 0;
 	private int maxHours = 23;
 
-	private boolean maskInternalValueChange = false;
+	protected boolean maskInternalValueChange = false;
 
 	private HorizontalLayout root;
 
@@ -189,8 +189,8 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 				}
 				maskInternalValueChange = true;
 				updateValue();
-				AbstractTimeField.this.fireValueChange(true);
 				maskInternalValueChange = false;
+				AbstractTimeField.this.fireValueChange(true);
 
 			}
 		});
@@ -497,5 +497,13 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 
 		this.maxHours = maxHours;
 		updateFields();
+	}
+
+	@Override
+	protected void fireValueChange(boolean repaintIsNotNeeded) {
+		if (maskInternalValueChange) {
+			return;
+		}
+		super.fireValueChange(repaintIsNotNeeded);
 	}
 }

@@ -7,7 +7,7 @@ import java.util.Date;
  * <p>
  * Uses {@link Date} as internal data type.
  *
- * @author Thomas Mattsson / Vaadin OY
+ * @author Thomas Mattsson / Vaadin Ltd.
  */
 @SuppressWarnings("deprecation")
 public class TimeField extends AbstractTimeField<Date> {
