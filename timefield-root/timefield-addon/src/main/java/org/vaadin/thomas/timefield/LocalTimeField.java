@@ -9,7 +9,7 @@ import java.time.LocalTime;
  *
  * @author Thomas Mattsson / Vaadin Ltd.
  */
-public class LocalTimeField extends AbstractTimeField<LocalTime> {
+public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 
 	private static final long serialVersionUID = 4657188596501444712L;
 

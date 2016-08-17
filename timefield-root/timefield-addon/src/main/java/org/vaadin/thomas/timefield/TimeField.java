@@ -10,7 +10,7 @@ import java.util.Date;
  * @author Thomas Mattsson / Vaadin Ltd.
  */
 @SuppressWarnings("deprecation")
-public class TimeField extends AbstractTimeField<Date> {
+public class TimeField extends AbstractDropdownTimeField<Date> {
 
 	private static final long serialVersionUID = 4657188596501444712L;
 
