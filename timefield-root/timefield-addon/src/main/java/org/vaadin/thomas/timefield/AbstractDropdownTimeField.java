@@ -197,54 +197,10 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 			return;
 		}
 
-		// check hour bounds
-		if (getHoursInternal() < minHours) {
-			// guess
-			int compatibleVal = getHoursInternal();
-			while (compatibleVal < 24) {
-				if (compatibleVal >= minHours) {
-					break;
-				}
-				compatibleVal++;
-			}
-			if (compatibleVal >= minHours) {
-				setHoursInternal(compatibleVal);
-			} else {
-				// no acceptable hour found. Most likely user is changing
-				// bounds, and will fix with another call to the other bound.
-			}
-		} else if (getHoursInternal() > maxHours) {
-			// guess
-			int compatibleVal = getHoursInternal();
-			while (compatibleVal > 0) {
-				if (compatibleVal <= maxHours) {
-					break;
-				}
-				compatibleVal--;
-			}
-			if (compatibleVal <= maxHours) {
-				setHoursInternal(compatibleVal);
-			} else {
-				// no acceptable hour found. Most likely user is changing
-				// bounds, and will fix with another call to the other bound.
-			}
-		}
+		checkBoundsAndInterval();
+
 		hourSelect.setValue(getHoursInternal());
-
-		// check minute interval
-		if (getMinutesInternal() % intervalMinutes != 0) {
-			// guess
-			int compatibleVal = getMinutesInternal();
-			while (compatibleVal > 0) {
-				if (compatibleVal % intervalMinutes == 0) {
-					break;
-				}
-				compatibleVal--;
-			}
-			setMinutesInternal(compatibleVal);
-		}
 		minuteSelect.setValue(getMinutesInternal());
-
 		secondSelect.setValue(getSecondsInternal());
 
 		maskInternalValueChange = false;
@@ -274,14 +230,6 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 		minuteSelect.setReadOnly(readOnly);
 		secondSelect.setReadOnly(readOnly);
 		super.setReadOnly(readOnly);
-	}
-
-	@Override
-	protected void fireValueChange(boolean repaintIsNotNeeded) {
-		if (maskInternalValueChange) {
-			return;
-		}
-		super.fireValueChange(repaintIsNotNeeded);
 	}
 
 	@Override

@@ -223,4 +223,59 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 		updateFields();
 	}
 
+	protected void checkBoundsAndInterval() {
+		// check hour bounds
+		if (getHoursInternal() < minHours) {
+			// guess
+			int compatibleVal = getHoursInternal();
+			while (compatibleVal < 24) {
+				if (compatibleVal >= minHours) {
+					break;
+				}
+				compatibleVal++;
+			}
+			if (compatibleVal >= minHours) {
+				setHoursInternal(compatibleVal);
+			} else {
+				// no acceptable hour found. Most likely user is changing
+				// bounds, and will fix with another call to the other bound.
+			}
+		} else if (getHoursInternal() > maxHours) {
+			// guess
+			int compatibleVal = getHoursInternal();
+			while (compatibleVal > 0) {
+				if (compatibleVal <= maxHours) {
+					break;
+				}
+				compatibleVal--;
+			}
+			if (compatibleVal <= maxHours) {
+				setHoursInternal(compatibleVal);
+			} else {
+				// no acceptable hour found. Most likely user is changing
+				// bounds, and will fix with another call to the other bound.
+			}
+		}
+
+		// check minute interval
+		if (getMinutesInternal() % intervalMinutes != 0) {
+			// guess
+			int compatibleVal = getMinutesInternal();
+			while (compatibleVal > 0) {
+				if (compatibleVal % intervalMinutes == 0) {
+					break;
+				}
+				compatibleVal--;
+			}
+			setMinutesInternal(compatibleVal);
+		}
+	}
+
+	@Override
+	protected void fireValueChange(boolean repaintIsNotNeeded) {
+		if (maskInternalValueChange) {
+			return;
+		}
+		super.fireValueChange(repaintIsNotNeeded);
+	}
 }
