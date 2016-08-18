@@ -6,7 +6,7 @@ import java.util.Locale;
 import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.thomas.timefield.AbstractTimeField;
-import org.vaadin.thomas.timefield.LocalTimeTextField;
+import org.vaadin.thomas.timefield.TimeTextField;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -41,7 +41,7 @@ public class DemoUI extends UI {
 	}
 
 	private AbstractTimeField<?> createField(String caption) {
-		return new LocalTimeTextField(caption);
+		return new TimeTextField(caption);
 	}
 
 	private void addThings(final VerticalLayout content) {
