@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.vaadin.thomas.timefield.AbstractDropdownTimeField;
+import org.vaadin.thomas.timefield.AbstractTimeField;
 import org.vaadin.thomas.timefield.LocalTimeField;
 
 import com.vaadin.annotations.Theme;
@@ -37,14 +37,24 @@ public class DemoUI extends UI {
 		content.setMargin(true);
 		setContent(content);
 
-		final AbstractDropdownTimeField<?> f = new LocalTimeField();
+		addThings(content);
+
+	}
+
+	private LocalTimeField createField() {
+		return new LocalTimeField();
+	}
+
+	private void addThings(final VerticalLayout content) {
+
+		final AbstractTimeField<?> f = createField();
 		f.setLocale(Locale.FRANCE);
 		f.setWidth("200px");
 		f.setImmediate(true);
 		f.setHours(0);
 		content.addComponent(f);
 
-		AbstractDropdownTimeField<?> f2 = new LocalTimeField();
+		AbstractTimeField<?> f2 = createField();
 		f2.setResolution(Resolution.SECOND);
 		f2.setLocale(Locale.US);
 		f2.setWidth("200px");
@@ -59,7 +69,7 @@ public class DemoUI extends UI {
 
 		f2.setPropertyDataSource(f);
 
-		f2 = new LocalTimeField();
+		f2 = createField();
 		f2.setWidth("200px");
 		f2.setResolution(Resolution.MINUTE);
 		f2.setMinutes(40);
@@ -77,7 +87,6 @@ public class DemoUI extends UI {
 		f2.setWidth("200px");
 		f2.setReadOnly(true);
 		content.addComponent(f2);
-
 	}
 
 }
