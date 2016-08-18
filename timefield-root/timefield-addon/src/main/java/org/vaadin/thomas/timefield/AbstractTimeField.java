@@ -22,6 +22,19 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 
 	public AbstractTimeField() {
 		super();
+
+		addStyleName("timefield");
+		setSizeUndefined();
+	}
+
+	@Override
+	protected void setInternalValue(T newValue) {
+		super.setInternalValue(newValue);
+
+		if (maskInternalValueChange) {
+			return;
+		}
+		updateFields();
 	}
 
 	/**

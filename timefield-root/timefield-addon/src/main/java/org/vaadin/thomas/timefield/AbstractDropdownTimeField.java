@@ -43,23 +43,6 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 		fillSeconds();
 		root.addComponent(secondSelect);
 
-		// when setValue() is called, update selects
-		addValueChangeListener(new Property.ValueChangeListener() {
-
-			private static final long serialVersionUID = 3383351188340627219L;
-
-			@Override
-			public void valueChange(Property.ValueChangeEvent event) {
-				if (maskInternalValueChange) {
-					return;
-				}
-				updateFields();
-			}
-		});
-
-		addStyleName("timefield");
-		setSizeUndefined();
-
 		updateFields();
 	}
 

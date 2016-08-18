@@ -36,14 +36,12 @@ public class LocalTimeTextField extends AbstractTextTimeField<LocalTime> {
 			setValue(fieldProp.getValue(), true);
 			maskInternalValueChange = false;
 			checkBoundsAndInterval();
-
-			fireValueChange(false);
 		});
 
 	}
 
 	public LocalTimeTextField(String string) {
-		super();
+		this();
 		setCaption(string);
 	}
 
