@@ -1,13 +1,13 @@
 package org.vaadin.thomas.timefield.demo;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.thomas.timefield.AbstractTimeField;
 import org.vaadin.thomas.timefield.LocalTimeField;
+import org.vaadin.thomas.timefield.LocalTimeTextField;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -41,8 +41,8 @@ public class DemoUI extends UI {
 
 	}
 
-	private LocalTimeField createField() {
-		return new LocalTimeField();
+	private AbstractTimeField<?> createField() {
+		return new LocalTimeTextField();
 	}
 
 	private void addThings(final VerticalLayout content) {
@@ -59,12 +59,14 @@ public class DemoUI extends UI {
 		f2.setLocale(Locale.US);
 		f2.setWidth("200px");
 		// f2.setHourMin(1);
-		f2.setHourMax(14);
+		// f2.setHourMax(14);
 		content.addComponent(f2);
 		f2.addValueChangeListener(e -> {
-			final LocalTime t = (LocalTime) e.getProperty().getValue();
+			final AbstractTimeField<?> field = (AbstractTimeField<?>) e
+					.getProperty();
+			final LocalTime t = (LocalTime) field.getValue();
 			System.out.println(t);
-			Notification.show(t.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+			Notification.show(field.getFormattedValue());
 		});
 
 		f2.setPropertyDataSource(f);

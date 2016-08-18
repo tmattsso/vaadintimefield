@@ -88,6 +88,12 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	protected abstract void setSecondsInternal(int val);
 
 	/**
+	 * Returns the value as a locale-formatted String. If value is
+	 * <code>null</code>, a null String will be returned.
+	 */
+	public abstract String getFormattedValue();
+
+	/**
 	 * Sets locale that is used for time format detection. Defaults to browser
 	 * locale.
 	 */

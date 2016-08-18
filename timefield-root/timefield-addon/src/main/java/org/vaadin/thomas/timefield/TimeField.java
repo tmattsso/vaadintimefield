@@ -1,5 +1,7 @@
 package org.vaadin.thomas.timefield;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -66,6 +68,53 @@ public class TimeField extends AbstractDropdownTimeField<Date> {
 		final Date value = getValue();
 		value.setSeconds(val);
 		setValue(value);
+	}
+
+	@Override
+	public String getFormattedValue() {
+		if (getValue() == null) {
+			return null;
+		}
+
+		String format;
+		if (!is24HourClock()) {
+
+			switch (getResolution()) {
+			case HOUR:
+				format = "hh a";
+				break;
+			case MINUTE:
+				format = "hh:mm a";
+				break;
+			case SECOND:
+				format = "hh:mm:ss a";
+				break;
+
+			default:
+				format = "hh:mm:ss a";
+				break;
+			}
+
+		} else {
+			switch (getResolution()) {
+			case HOUR:
+				format = "HH";
+				break;
+			case MINUTE:
+				format = "HH:mm";
+				break;
+			case SECOND:
+				format = "HH:mm:ss";
+				break;
+
+			default:
+				format = "HH:mm:ss";
+				break;
+			}
+		}
+
+		final DateFormat df = new SimpleDateFormat(format);
+		return df.format(getValue());
 	}
 
 }

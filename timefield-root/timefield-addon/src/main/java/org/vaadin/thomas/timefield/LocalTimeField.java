@@ -67,4 +67,9 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 		setValue(value, true);
 	}
 
+	@Override
+	public String getFormattedValue() {
+		return new LocalTimeConverter(this).convertToPresentation(getValue(),
+				String.class, getLocale());
+	}
 }
