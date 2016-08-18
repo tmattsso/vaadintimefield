@@ -47,6 +47,8 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 					+ "'");
 		}
 
+		setHoursInternal(hours);
+
 	}
 
 	public int getMinutes() {
@@ -66,6 +68,8 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 					+ "' is not compatible with interval '" + intervalMinutes
 					+ "'");
 		}
+
+		setMinuteInterval(minutes);
 	}
 
 	public int getSeconds() {

@@ -148,22 +148,22 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 
 		resetValue();
 
-		int val;
-		if (resolution.ordinal() <= Resolution.HOUR.ordinal()) {
-			val = (Integer) hourSelect.getValue();
+		int h = 0, m = 0, s = 0;
 
-			setHoursInternal(val);
+		if (resolution.ordinal() <= Resolution.HOUR.ordinal()) {
+			h = (Integer) hourSelect.getValue();
 		}
 		if (resolution.ordinal() < Resolution.HOUR.ordinal()) {
-			val = (Integer) minuteSelect.getValue();
-			setMinutesInternal(val);
+			m = (Integer) minuteSelect.getValue();
 		}
 		if (resolution.ordinal() < Resolution.MINUTE.ordinal()) {
-			val = (Integer) secondSelect.getValue();
-			setSecondsInternal(val);
+			s = (Integer) secondSelect.getValue();
 		}
 
+		setInternalValue(h, m, s);
 	}
+
+	protected abstract void setInternalValue(int h, int m, int s);
 
 	protected abstract void resetValue();
 

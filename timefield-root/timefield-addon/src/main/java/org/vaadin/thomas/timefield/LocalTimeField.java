@@ -48,6 +48,9 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 
 	@Override
 	protected void setHoursInternal(int val) {
+		if (getValue() == null) {
+			resetValue();
+		}
 		LocalTime value = getValue();
 		value = value.withHour(val);
 		setValue(value, true);
@@ -55,6 +58,9 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 
 	@Override
 	protected void setMinutesInternal(int val) {
+		if (getValue() == null) {
+			resetValue();
+		}
 		LocalTime value = getValue();
 		value = value.withMinute(val);
 		setValue(value, true);
@@ -62,6 +68,9 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 
 	@Override
 	protected void setSecondsInternal(int val) {
+		if (getValue() == null) {
+			resetValue();
+		}
 		LocalTime value = getValue();
 		value = value.withSecond(val);
 		setValue(value, true);
@@ -71,5 +80,11 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 	public String getFormattedValue() {
 		return new LocalTimeConverter(this).convertToPresentation(getValue(),
 				String.class, getLocale());
+	}
+
+	@Override
+	protected void setInternalValue(int h, int m, int s) {
+		final LocalTime time = LocalTime.of(h, m, s);
+		setValue(time);
 	}
 }

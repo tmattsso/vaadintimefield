@@ -31,7 +31,11 @@ public class TimeField extends AbstractDropdownTimeField<Date> {
 
 	@Override
 	protected void resetValue() {
-		setValue(new Date());
+		final Date date = new Date(0L);
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		setValue(date);
 	}
 
 	@Override
@@ -94,6 +98,15 @@ public class TimeField extends AbstractDropdownTimeField<Date> {
 
 		final DateFormat df = new SimpleDateFormat(format);
 		return df.format(getValue());
+	}
+
+	@Override
+	protected void setInternalValue(int h, int m, int s) {
+		final Date date = new Date(0L);
+		date.setHours(h);
+		date.setMinutes(m);
+		date.setSeconds(s);
+		setValue(date);
 	}
 
 }

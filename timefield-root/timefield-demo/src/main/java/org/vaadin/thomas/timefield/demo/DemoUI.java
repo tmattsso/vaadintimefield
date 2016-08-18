@@ -6,7 +6,7 @@ import java.util.Locale;
 import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.thomas.timefield.AbstractTimeField;
-import org.vaadin.thomas.timefield.TimeField;
+import org.vaadin.thomas.timefield.LocalTimeTextField;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -41,7 +41,7 @@ public class DemoUI extends UI {
 	}
 
 	private AbstractTimeField<?> createField(String caption) {
-		return new TimeField(caption);
+		return new LocalTimeTextField(caption);
 	}
 
 	private void addThings(final VerticalLayout content) {
@@ -60,13 +60,13 @@ public class DemoUI extends UI {
 		// f2.setHourMin(1);
 		// f2.setHourMax(14);
 		content.addComponent(f2);
-		f2.addValueChangeListener(e -> {
+		f.addValueChangeListener(e -> {
 			final AbstractTimeField<?> field = (AbstractTimeField<?>) e
 					.getProperty();
 			Notification.show(field.getFormattedValue());
-
 			System.out.println(field.getValue());
 		});
+		f2.setBuffered(false);
 
 		f2.setPropertyDataSource(f);
 
