@@ -50,27 +50,6 @@ public class TimeField extends AbstractDropdownTimeField<Date> {
 	}
 
 	@Override
-	protected void setHoursInternal(int val) {
-		final Date value = getValue();
-		value.setHours(val);
-		setValue(value);
-	}
-
-	@Override
-	protected void setMinutesInternal(int val) {
-		final Date value = getValue();
-		value.setMinutes(val);
-		setValue(value);
-	}
-
-	@Override
-	protected void setSecondsInternal(int val) {
-		final Date value = getValue();
-		value.setSeconds(val);
-		setValue(value);
-	}
-
-	@Override
 	public String getFormattedValue() {
 		if (getValue() == null) {
 			return null;

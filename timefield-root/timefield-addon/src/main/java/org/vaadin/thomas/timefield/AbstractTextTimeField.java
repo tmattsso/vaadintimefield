@@ -11,6 +11,7 @@ public abstract class AbstractTextTimeField<T> extends AbstractTimeField<T> {
 
 	public AbstractTextTimeField() {
 		field = new TextField();
+		field.setWidth("100%");
 		field.setNullRepresentation("");
 	}
 

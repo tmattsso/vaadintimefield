@@ -247,21 +247,18 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 	}
 
 	@Override
-	public void setHours(int hours) throws IllegalArgumentException {
-
-		super.setHours(hours);
-		hourSelect.setValue(hours);
+	protected void setHoursInternal(int val) {
+		hourSelect.setValue(val);
 	}
 
 	@Override
-	public void setMinutes(int minutes) {
-		super.setMinutes(minutes);
-		minuteSelect.setValue(minutes);
+	protected void setMinutesInternal(int val) {
+		minuteSelect.setValue(val);
 	}
 
 	@Override
-	public void setSeconds(int seconds) {
-		super.setSeconds(seconds);
-		secondSelect.setValue(seconds);
+	protected void setSecondsInternal(int val) {
+		secondSelect.setValue(val);
 	}
+
 }

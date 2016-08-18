@@ -73,6 +73,7 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	}
 
 	public void setSeconds(int seconds) {
+		setSecondsInternal(seconds);
 	}
 
 	protected abstract int getHoursInternal();
