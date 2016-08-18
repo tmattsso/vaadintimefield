@@ -1,6 +1,5 @@
 package org.vaadin.thomas.timefield;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 import com.vaadin.data.util.ObjectProperty;
@@ -8,7 +7,7 @@ import com.vaadin.data.util.ObjectProperty;
 /**
  * A field for selecting time values.
  * <p>
- * Uses {@link LocalTime} as internal data type.
+ * Uses {@link Date} as internal data type.
  *
  * @author Thomas Mattsson / Vaadin Ltd.
  */
