@@ -55,9 +55,8 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	public void setHours(int hours) throws IllegalArgumentException {
 
 		if (hours < minHours || hours > maxHours) {
-			throw new IllegalArgumentException("Value '" + hours
-					+ "' is outside bounds '" + minHours + "' - '" + maxHours
-					+ "'");
+			throw new IllegalArgumentException(
+					"Value '" + hours + "' is outside bounds '" + minHours + "' - '" + maxHours + "'");
 		}
 
 		setHoursInternal(hours);
@@ -77,12 +76,11 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	 */
 	public void setMinutes(int minutes) {
 		if (minutes % intervalMinutes != 0) {
-			throw new IllegalArgumentException("Value '" + minutes
-					+ "' is not compatible with interval '" + intervalMinutes
-					+ "'");
+			throw new IllegalArgumentException(
+					"Value '" + minutes + "' is not compatible with interval '" + intervalMinutes + "'");
 		}
 
-		setMinuteInterval(minutes);
+		setMinutesInternal(minutes);
 	}
 
 	public int getSeconds() {
@@ -119,12 +117,10 @@ public abstract class AbstractTimeField<T> extends CustomField<T> {
 	public void setLocale(Locale l) {
 		givenLocale = l;
 
-		final DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT,
-				givenLocale);
+		final DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, givenLocale);
 		final String time = df.format(new Date());
 
-		if (time.contains("am") || time.contains("AM") || time.contains("pm")
-				|| time.contains("PM")) {
+		if (time.contains("am") || time.contains("AM") || time.contains("pm") || time.contains("PM")) {
 			use24HourClock = false;
 		} else {
 			use24HourClock = true;
