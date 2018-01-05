@@ -83,8 +83,13 @@ public class LocalTimeField extends AbstractDropdownTimeField<LocalTime> {
 	}
 
 	@Override
-	protected void setInternalValue(int h, int m, int s) {
-		final LocalTime time = LocalTime.of(h, m, s);
-		setValue(time);
+	protected void setInternalValue(Integer h, Integer m, Integer s) {
+		if((h!=null)&&(m!=null)&&(s!=null)){
+			final LocalTime time = LocalTime.of(h, m, s);
+			setValue(time);
+		}
+		else {
+			setValue(null);
+		}
 	}
 }

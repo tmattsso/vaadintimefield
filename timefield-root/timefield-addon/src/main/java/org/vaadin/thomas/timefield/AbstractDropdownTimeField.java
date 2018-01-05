@@ -4,6 +4,7 @@ import com.vaadin.data.Property;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 
 /**
@@ -13,9 +14,11 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 
 	private static final long serialVersionUID = -676425827861766118L;
 
-	final NativeSelect hourSelect;
-	final NativeSelect minuteSelect;
-	final NativeSelect secondSelect;
+	private boolean nullSelectionAllowed = true;
+	
+	final NativeSelect hourSelect = new NativeSelect();
+	final NativeSelect minuteSelect = new NativeSelect();
+	final NativeSelect secondSelect = new NativeSelect();
 
 	private HorizontalLayout root;
 
@@ -26,17 +29,21 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 
 	public AbstractDropdownTimeField() {
 
-		hourSelect = getSelect();
-		minuteSelect = getSelect();
-		secondSelect = getSelect();
+		getSelect(hourSelect);
+		getSelect(minuteSelect);
+		getSelect(secondSelect);
 
 		root = new HorizontalLayout();
 		root.setHeight(null);
 		root.setWidth(null);
-
+		
+		Label dots = new Label(":");
+		dots.addStyleName("dosPuntos");
+		
 		fillHours();
 		root.addComponent(hourSelect);
-
+		root.addComponent(dots);
+		
 		fillMinutes();
 		root.addComponent(minuteSelect);
 
@@ -86,28 +93,76 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 		}
 	}
 
-	private NativeSelect getSelect() {
-		final NativeSelect select = new NativeSelect();
-		select.setImmediate(true);
-		select.setNullSelectionAllowed(false);
-		select.addValueChangeListener(new Property.ValueChangeListener() {
+	/*
+	Todo esto acaba heredando de CustomField, que no lo tiene, así que no veo otro remedio que reimplementarlo
+	*/
+	public void setNullSelectionAllowed(boolean nullSelectionAllowed){
+		if (nullSelectionAllowed != this.nullSelectionAllowed) {
+            this.nullSelectionAllowed = nullSelectionAllowed;
+            markAsDirty();
+        }
+	}
+	
+	private void getSelect(NativeSelect ns) {
+		//final NativeSelect select = new NativeSelect();
+		ns.setImmediate(true);
+		//if(ns.equals(hourSelect)){
+			ns.setNullSelectionAllowed(this.nullSelectionAllowed); // solo permito la selección de null en las horas, para simplificar
+		//}
+		//else{
+		//	ns.setNullSelectionAllowed(false);
+		//}
+		if(!(ns.equals(hourSelect))){ // si son minutos o segundos...
+			if(ns.getValue()==null){
+				ns.setEnabled(false); // hasta que no pongamos las horas con valor no se habilitarán los minutos y segundos
+			}
+		}
+		ns.addValueChangeListener(new Property.ValueChangeListener() {
 
 			private static final long serialVersionUID = 3383351188340627219L;
 
 			@Override
-			public void valueChange(
+			public void valueChange( // continuar per ací
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				if (maskInternalValueChange) {
 					return;
 				}
 				maskInternalValueChange = true;
+				//event.getProperty().
+				//Object cac = event.getProperty();
+				// la part del updateValue() que ara canvie ací per a actuar en funció del dropdown mogut:
+				if(ns.equals(hourSelect)){
+					if(ns.getValue()==null){
+						minuteSelect.setValue(null);
+						minuteSelect.setEnabled(false);
+						secondSelect.setValue(null);
+						secondSelect.setEnabled(false);
+					}
+					else{
+						minuteSelect.setEnabled(true);
+						secondSelect.setEnabled(true);
+						if(minuteSelect.getValue()==null){
+							minuteSelect.setValue(0);
+						}
+						if(secondSelect.getValue()==null){
+							secondSelect.setValue(0);
+						}
+					}
+				}
+				else{ // si hemos seleccionado minutos o segundos...
+					if(ns.getValue()==null){
+						ns.setValue(0);
+					}
+				}
+				
 				updateValue();
+				//markAsDirty(); // test
 				maskInternalValueChange = false;
 				AbstractDropdownTimeField.this.fireValueChange(true);
 
 			}
 		});
-		return select;
+		//return select;
 	}
 
 	/**
@@ -116,24 +171,36 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 	 */
 	private void updateValue() {
 
+		
+		
 		// if the value of any select is null at this point, we need to init it
 		// to zero to prevent exceptions.
-
+		/*
 		if (secondSelect.getValue() == null) {
-			secondSelect.setValue(0);
+			//secondSelect.setValue(0);
+			minuteSelect.setValue(null);
+			hourSelect.setValue(null);
 		}
 		if (minuteSelect.getValue() == null) {
-			minuteSelect.setValue(0);
+			//minuteSelect.setValue(0);
+			secondSelect.setValue(null);
+			//minuteSelect.select(null);
+			hourSelect.setValue(null);
 		}
 		if (hourSelect.getValue() == null) {
-			hourSelect.setValue(0);
+			//hourSelect.setValue(0);
+			secondSelect.setValue(null);
+			minuteSelect.setValue(null);
+			//hourSelect.setValue(null);
 		}
-
+		*/
 		resetValue();
 
-		int h = 0, m = 0, s = 0;
+		Integer h = 0, m = 0, s = 0;
 
 		if (resolution.ordinal() <= Resolution.HOUR.ordinal()) {
+			//Integer hourSelectValue = null;
+			//(Integer)hourSelectvalue;
 			h = (Integer) hourSelect.getValue();
 		}
 		if (resolution.ordinal() < Resolution.HOUR.ordinal()) {
@@ -146,7 +213,7 @@ public abstract class AbstractDropdownTimeField<T> extends AbstractTimeField<T> 
 		setInternalValue(h, m, s);
 	}
 
-	protected abstract void setInternalValue(int h, int m, int s);
+	protected abstract void setInternalValue(Integer h, Integer m, Integer s);
 
 	protected abstract void resetValue();
 

@@ -60,12 +60,17 @@ public class TimeField extends AbstractDropdownTimeField<Date> {
 	}
 
 	@Override
-	protected void setInternalValue(int h, int m, int s) {
-		final Date date = new Date(0L);
-		date.setHours(h);
-		date.setMinutes(m);
-		date.setSeconds(s);
-		setValue(date);
+	protected void setInternalValue(Integer h, Integer m, Integer s) {
+		if((h!=null)&&(m!=null)&&(s!=null)){
+			final Date date = new Date(0L);
+			date.setHours(h);
+			date.setMinutes(m);
+			date.setSeconds(s);
+			setValue(date);
+		}
+		else{
+			setValue(null);
+		}
 	}
 
 }
